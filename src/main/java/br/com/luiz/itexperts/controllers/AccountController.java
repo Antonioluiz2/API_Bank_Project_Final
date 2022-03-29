@@ -27,70 +27,57 @@ import br.com.luiz.itexperts.models.Account;
 import br.com.luiz.itexperts.models.Card;
 import br.com.luiz.itexperts.services.AccountService;
 
-
-@Api(value="Itexperts_accounts")
+@Api(value = "Itexperts_accounts")
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class AccountController {
 
-    @Autowired
-    private AccountService service;
+	@Autowired
+	private AccountService service;
 
-    @ApiOperation(value="Retorna uma conta por ID")
-    @GetMapping("{id}")
-    public ResponseEntity<Account> findById(
-            @PathVariable("id") Integer id) {
+	@ApiOperation(value = "Retorna uma conta por ID")
+	@GetMapping("{id}")
+	public ResponseEntity<Account> findById(@PathVariable("id") Integer id) {
 
-        Account account = service.findById(id);
-        return new ResponseEntity<>(account, HttpStatus.OK);
-    }
+		Account account = service.findById(id);
+		return new ResponseEntity<>(account, HttpStatus.OK);
+	}
 
-    @ApiOperation(value="Retorna todas as contas cadastradas")
-    @GetMapping
-    public ResponseEntity<Account> findAll() {
+	@ApiOperation(value = "Retorna todas as contas cadastradas")
+	@GetMapping
+	public ResponseEntity<Account> findAll() {
 
-        List<Account> accounts = service.findAll();
-        return new ResponseEntity(accounts, HttpStatus.OK);
-    }
+		List<Account> accounts = service.findAll();
+		return new ResponseEntity(accounts, HttpStatus.OK);
+	}
 
-    @ApiOperation(value="Adiciona uma conta no Banco de Dados")
-    @PostMapping
-    public ResponseEntity<Account> save(@Valid @RequestBody Account account) {
-        Account ac = service.save(account);
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(ac.getId())
-//                .toUri();
-        //return ResponseEntity.created(location).body(ac);
-       // @PostMapping("/account/add")
-    	//public ResponseEntity<Object> saveAccount(@RequestBody @Valid AccountRequestDto accountRequestDto) {
-    		//Account account = service.save(account);
-    		return ResponseEntity.status(HttpStatus.CREATED).body(ac);
-    	
-    }
+	@ApiOperation(value = "Adiciona uma conta no Banco de Dados")
+	@PostMapping
+	public ResponseEntity<Account> save(@Valid @RequestBody Account account) {
+		Account ac = service.save(account);
+		return ResponseEntity.status(HttpStatus.CREATED).body(ac);
 
-    @ApiOperation(value="Edita um dado da Conta, exceto cartões.")
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<Account> edit(@PathVariable("id") Integer id,
-                                        @Valid @RequestBody Account account) {
-        Account ac = service.edit(id, account);
-        return new ResponseEntity<>(ac, HttpStatus.CREATED);
-    }
+	}
 
-    @ApiOperation(value="Adiciona um Cartão a Conta")
-    @PutMapping("/addcard/{id}")
-    public ResponseEntity<Account> addCard(@PathVariable("id") Integer id,
-                                           @Valid @RequestBody Card card) {
-        Account ac = service.addCard(id, card);
-        return new ResponseEntity<Account>(ac, HttpStatus.OK);
-    }
+	@ApiOperation(value = "Edita um dado da Conta, exceto cartões.")
+	@PutMapping("/edit/{id}")
+	public ResponseEntity<Account> edit(@PathVariable("id") Integer id, @Valid @RequestBody Account account) {
+		Account ac = service.edit(id, account);
+		return new ResponseEntity<>(ac, HttpStatus.CREATED);
+	}
 
-    @ApiOperation(value="Deleta Uma Conta do Banco")
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        service.delete(id);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-    }
+	@ApiOperation(value = "Adiciona um Cartão a Conta")
+	@PutMapping("/addcard/{id}")
+	public ResponseEntity<Account> addCard(@PathVariable("id") Integer id, @Valid @RequestBody Card card) {
+		Account ac = service.addCard(id, card);
+		return new ResponseEntity<Account>(ac, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Deleta Uma Conta do Banco")
+	@DeleteMapping("{id}")
+	public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+		service.delete(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
 
 }
