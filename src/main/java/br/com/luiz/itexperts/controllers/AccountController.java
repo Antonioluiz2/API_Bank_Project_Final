@@ -39,6 +39,7 @@ public class AccountController {
 		return new ResponseEntity<>(account, HttpStatus.OK);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@ApiOperation(value = "Retorna todas as contas cadastradas")
 	@GetMapping
 	public ResponseEntity<Account> findAll() {
